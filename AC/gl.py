@@ -1,1 +1,2 @@
-ON_OFF = 0
+UN_LOCK = False
+SPK = False

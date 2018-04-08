@@ -1,6 +1,6 @@
 # routing.py
 from channels.routing import route
-from TM.consumers import ws_connect, ws_message, ws_disconnect
+from AC.consumers import ws_connect, ws_message, ws_disconnect
 # from .channel_handlers import braintree_process
 
 # route(‘channel名称’, ‘消费方法’,’路径’)
