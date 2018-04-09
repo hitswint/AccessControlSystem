@@ -3,29 +3,47 @@
     <head>
         <meta charset="utf-8" />
         <title>{{website_title}}</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.staticfile.org/jquery/2.1.3/jquery.js"></script>
         <script src="https://cdn.staticfile.org/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdn.staticfile.org/jquery/2.1.3/jquery.min.map"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
 
-        <button type="button" id='UN_LOCK' class="btn btn-default">UN_LOCK</button>
-        <div>
-            Door is now:
-            <p id="un_lock_value">
-                {{ un_lock_ret }}
-            </p>
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="submit" id='UN_LOCK' class="btn btn-default">UN_LOCK</button>
+            </div>
+            <div class="col-sm-8">
+                Door is now:
+                <a id="un_lock_value">
+                    {{ un_lock_ret }}
+                </a>
+            </div>
         </div>
-
-        <button type="button" id='SPK' class="btn btn-default">SPK</button>
-        <div>
-            Speaker is now:
-            <p id="spk_value">
-                {{ spk_ret }}
-            </p>
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="submit" id='SPK' class="btn btn-default">SPK</button>
+            </div>
+            <div class="col-sm-8">
+                Speaker is now:
+                <a id="spk_value">
+                    {{ spk_ret }}
+                </a>
+            </div>
         </div>
-
-        <button type="button" id='UPDATE' class="btn btn-default">UPDATE</button>
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="submit" id='COM' class="btn btn-default">COM</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="submit" id='UPDATE' class="btn btn-default">UPDATE</button>
+            </div>
+        </div>
 
         <script>
          $(document).ready(function(){
@@ -40,6 +58,9 @@
                      $('#spk_value').html('') //清空前面的结果
                      $('#spk_value').html(ret) //
                  })
+             });
+             $("#COM").click(function(){
+                 $.get("{% url 'index-view' %}", {'com_button':3});
              });
              $("#UPDATE").click(function(){
                  $.get("{% url 'index-view' %}", {'update_button':0});

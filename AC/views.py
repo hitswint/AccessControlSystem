@@ -18,6 +18,7 @@ def index(request):
     if request.method == 'GET':
         un_lock_value = request.GET.get('un_lock_button')
         spk_value = request.GET.get('spk_button')
+        com_value = request.GET.get('com_button')
         update_value = request.GET.get('update_button')
         if un_lock_value:
             # Channel('websocket.receive').send({'text': str(gl.ON_OFF)})
@@ -38,6 +39,9 @@ def index(request):
 
             Group('default').send({'text': spk_value})
             return HttpResponse(spk_ret)
+        elif com_value:
+            Group('default').send({'text': com_value})
+            return HttpResponse("Come in!")
         elif update_value:
             Group('default').send({'text': update_value})
             return HttpResponse("Updating!")
