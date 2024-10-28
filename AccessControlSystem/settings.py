@@ -44,14 +44,25 @@ INSTALLED_APPS = [
     'channels',
 ]
 
+ASGI_APPLICATION = 'AccessControlSystem.asgi.application'
+
 # 使用redis作为channel的后端，redis作为消息的读写管道。
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("localhost", 6379)],
+#         },
+#         "ROUTING": "AC.routing.channel_routing",
+#     },
+# }
+
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
+            "hosts": [("127.0.0.1", 6379)],
         },
-        "ROUTING": "AC.routing.channel_routing",
     },
 }
 
