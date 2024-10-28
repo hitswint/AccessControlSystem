@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     'gunicorn',
 ]
 
-# 不随python manage.py runworker启动
-# ASGI_APPLICATION = 'AccessControlSystem.asgi.application'
+ASGI_APPLICATION = 'AccessControlSystem.asgi.application'
 
 # 使用redis作为channel的后端，redis作为消息的读写管道。
 # CHANNEL_LAYERS = {
