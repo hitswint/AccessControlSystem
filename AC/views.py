@@ -32,6 +32,7 @@ def index(request):
 
             # Group('default').send({'text': un_lock_value})
             async_to_sync(channel_layer.send)(
+                'default',
                 {'text': un_lock_value}
             )
             return HttpResponse(un_lock_ret)
@@ -44,18 +45,21 @@ def index(request):
 
             # Group('default').send({'text': spk_value})
             async_to_sync(channel_layer.send)(
+                'default',
                 {'text': spk_value}
             )
             return HttpResponse(spk_ret)
         elif com_value:
             # Group('default').send({'text': com_value})
             async_to_sync(channel_layer.send)(
+                'default',
                 {'text': com_value}
             )
             return HttpResponse("Come in!")
         elif update_value:
             # Group('default').send({'text': update_value})
             async_to_sync(channel_layer.send)(
+                'default',
                 {'text': update_value}
             )
             return HttpResponse("Updating!")
