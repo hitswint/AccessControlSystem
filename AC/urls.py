@@ -1,11 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 from AC.views import index, OtaVersionView, OtaUpdateView
 # from swint.models import Article, Category
 
 urlpatterns = [
-    url(r'^$', index, name='index-view'),
-    url(r'^Fota/image.version$',
+    path(r'^$', index, name='index-view'),
+    path(r'^Fota/image.version$',
         OtaVersionView.as_view(),
         name='ota-version-view'),
-    url(r'^Fota/image.bin$', OtaUpdateView.as_view(), name='ota-update-view'),
+    path(r'^Fota/image.bin$', OtaUpdateView.as_view(), name='ota-update-view'),
 ]

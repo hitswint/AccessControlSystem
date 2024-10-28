@@ -1,5 +1,5 @@
-# from django.shortcuts import render
-from django.shortcuts import render_to_response
+from django.shortcuts import render
+# from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.views.generic import DetailView
 # from django.conf import settings
@@ -8,8 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 import AC.gl as gl
 import glob
 import os
-from channels import Group
-
+# from channels import Group
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 # Create your views here.
 
 
@@ -20,6 +21,7 @@ def index(request):
         spk_value = request.GET.get('spk_button')
         com_value = request.GET.get('com_button')
         update_value = request.GET.get('update_button')
+        channel_layer = get_channel_layer()
         if un_lock_value:
             # Channel('websocket.receive').send({'text': str(gl.ON_OFF)})
             gl.UN_LOCK = not gl.UN_LOCK
@@ -28,7 +30,10 @@ def index(request):
             else:
                 un_lock_ret = 'locked'
 
-            Group('default').send({'text': un_lock_value})
+            # Group('default').send({'text': un_lock_value})
+            async_to_sync(channel_layer.send)(
+                'text': un_lock_value
+            )
             return HttpResponse(un_lock_ret)
         elif spk_value:
             gl.SPK = not gl.SPK
@@ -37,18 +42,27 @@ def index(request):
             else:
                 spk_ret = 'off'
 
-            Group('default').send({'text': spk_value})
+            # Group('default').send({'text': spk_value})
+            async_to_sync(channel_layer.send)(
+                'text': spk_value
+            )
             return HttpResponse(spk_ret)
         elif com_value:
-            Group('default').send({'text': com_value})
+            # Group('default').send({'text': com_value})
+            async_to_sync(channel_layer.send)(
+                'text': com_value
+            )
             return HttpResponse("Come in!")
         elif update_value:
-            Group('default').send({'text': update_value})
+            # Group('default').send({'text': update_value})
+            async_to_sync(channel_layer.send)(
+                'text': update_value
+            )
             return HttpResponse("Updating!")
         else:
             un_lock_ret = 'locked'
             spk_ret = 'off'
-            return render_to_response('AC/index.html', {
+            return render(request, 'AC/index.html', {
                 'un_lock_ret': un_lock_ret,
                 'spk_ret': spk_ret,
             })
