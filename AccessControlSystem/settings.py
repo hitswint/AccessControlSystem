@@ -33,6 +33,8 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    # 'daphne',                   # 手动启动daphne
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,10 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'AC',
     'gunicorn',
-    'channels',
 ]
 
-ASGI_APPLICATION = 'AccessControlSystem.asgi.application'
+# 不随python manage.py runworker启动
+# ASGI_APPLICATION = 'AccessControlSystem.asgi.application'
 
 # 使用redis作为channel的后端，redis作为消息的读写管道。
 # CHANNEL_LAYERS = {
