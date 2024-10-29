@@ -31,9 +31,12 @@ def index(request):
                 un_lock_ret = 'locked'
 
             # Group('default').send({'text': un_lock_value})
-            async_to_sync(channel_layer.send)(
+            async_to_sync(channel_layer.group_send)(
                 'default',
-                {'text': un_lock_value}
+                {
+                    'type': 'send_message',
+                    'message': un_lock_value
+                }
             )
             return HttpResponse(un_lock_ret)
         elif spk_value:
@@ -44,23 +47,32 @@ def index(request):
                 spk_ret = 'off'
 
             # Group('default').send({'text': spk_value})
-            async_to_sync(channel_layer.send)(
+            async_to_sync(channel_layer.group_send)(
                 'default',
-                {'text': spk_value}
+                {
+                    'type': 'send_message',
+                    'message': spk_value
+                }
             )
             return HttpResponse(spk_ret)
         elif com_value:
             # Group('default').send({'text': com_value})
-            async_to_sync(channel_layer.send)(
+            async_to_sync(channel_layer.group_send)(
                 'default',
-                {'text': com_value}
+                {
+                    'type': 'send_message',
+                    'message': com_value
+                }
             )
             return HttpResponse("Come in!")
         elif update_value:
             # Group('default').send({'text': update_value})
-            async_to_sync(channel_layer.send)(
+            async_to_sync(channel_layer.group_send)(
                 'default',
-                {'text': update_value}
+                {
+                    'type': 'send_message',
+                    'message': update_value
+                }
             )
             return HttpResponse("Updating!")
         else:
