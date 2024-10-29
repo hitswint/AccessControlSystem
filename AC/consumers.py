@@ -49,22 +49,39 @@ class ChatConsumer(WebsocketConsumer):
 
     # 从某个用户(websocket)接收到消息时执行函数，向频道组发送信息
     def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        # 发送消息到频道组，频道组调用chat_message方法
-        async_to_sync(self.channel_layer.group_send)(
-            self.group_name,
-            {
-                'type': 'send_message',
-                'message': message
-            }
-        )
+        # 发送消息到频道组，组内各频道都调用send_message方法
+
+        # 接收json
+        # text_data_json = json.loads(text_data)
+        # message = text_data_json['message']
+        # async_to_sync(self.channel_layer.group_send)(
+        #     self.group_name,
+        #     {
+        #         'type': 'send_message',
+        #         'message': message
+        #     }
+        # )
+
+        # 接收字符串
+        # async_to_sync(self.channel_layer.group_send)(
+        #     self.group_name,
+        #     {
+        #         'type': 'send_message',
+        #         'message': text_data
+        #     }
+        # )
+
+        pass
 
     # 从频道组接收到消息后执行方法，向某个用户(websocket)发送信息
     def send_message(self, event):
         message = event['message']
         # 通过websocket发送消息到客户端
+
+        # 发送json
         # self.send(text_data=json.dumps({
         #     'text': message
         # }))
-        self.send({'text': message})
+
+        # 发送字符串
+        self.send(message)
